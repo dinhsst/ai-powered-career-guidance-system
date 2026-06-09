@@ -1,1 +1,64 @@
-<p>results-page works!</p>
+<mat-toolbar color="primary">
+	<span>Hệ thống tư vấn hướng nghiệp AI</span>
+	<span class="spacer"></span>
+	<button mat-stroked-button type="button" (click)="logout()">Đăng xuất</button>
+</mat-toolbar>
+
+<section class="page-content">
+	<mat-card>
+		<mat-card-header>
+			<mat-card-title>Kết quả</mat-card-title>
+			<mat-card-subtitle>Gợi ý nghề nghiệp phù hợp và lý do đi kèm</mat-card-subtitle>
+		</mat-card-header>
+		<mat-card-content>
+			@if (result) {
+				<section class="result-block">
+					<p>Mã Holland nổi trội: <strong>{{ result.holland_code }}</strong></p>
+					<p>Chế độ xử lý: <strong>{{ result.mode }}</strong></p>
+
+					@if (xaiFactors.length) {
+						<section class="xai-section">
+							<h3>Biểu đồ XAI cho gợi ý hàng đầu</h3>
+							<p class="xai-caption">Mức ảnh hưởng của từng yếu tố đến khuyến nghị nghề nghiệp số 1.</p>
+
+							<div class="xai-chart">
+								@for (factor of xaiFactors; track factor.key) {
+									<div class="xai-row">
+										<span class="xai-label">{{ factor.label }}</span>
+										<div class="xai-bar-track">
+											<div
+												class="xai-bar"
+												[class.positive]="factor.isPositive"
+												[class.negative]="!factor.isPositive"
+												[style.width.%]="factor.widthPercent"
+											></div>
+										</div>
+										<span class="xai-value">{{ factor.value | number:'1.2-2' }}</span>
+									</div>
+								}
+							</div>
+						</section>
+					}
+
+					<div class="recommendations">
+						@for (rec of result.recommendations; track rec.career_code) {
+							<mat-card class="recommendation-card">
+								<mat-card-title>{{ rec.career_name }}</mat-card-title>
+								<mat-card-subtitle>{{ rec.career_code }} • Độ phù hợp: {{ rec.confidence | percent:'1.0-0' }}</mat-card-subtitle>
+								<mat-card-content>
+									<p>{{ rec.explanation }}</p>
+								</mat-card-content>
+							</mat-card>
+						}
+					</div>
+				</section>
+			} @else {
+				<p>Chưa có dữ liệu kết quả. Vui lòng thực hiện bài đánh giá trước.</p>
+			}
+		</mat-card-content>
+		<mat-card-actions>
+			<button mat-button type="button" (click)="goToAssessment()">Làm lại đánh giá</button>
+			<button mat-button type="button" (click)="goToChat()">Hỏi thêm với AI</button>
+		</mat-card-actions>
+	</mat-card>
+</section>

@@ -1,0 +1,144 @@
+.spacer {
+	flex: 1;
+}
+
+.page-content {
+	padding: 1.1rem;
+	max-width: 980px;
+	margin: 0 auto;
+	animation: riseFadeIn 320ms ease both;
+}
+
+.chat-card {
+	width: 100%;
+}
+
+.messages {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	max-height: 54vh;
+	overflow: auto;
+	margin-bottom: 0.95rem;
+	padding: 0.3rem 0.35rem 0.15rem;
+}
+
+:host ::ng-deep mat-toolbar {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
+
+.message {
+	max-width: 80%;
+	padding: 0.75rem 0.9rem;
+	border-radius: 14px;
+	white-space: pre-wrap;
+	line-height: 1.42;
+	animation: riseFadeIn 280ms ease both;
+}
+
+.message.user {
+	align-self: flex-end;
+	background: linear-gradient(140deg, #d9e7ff, #c8ddff);
+	box-shadow: 0 10px 22px -14px rgba(22, 60, 128, 0.65);
+}
+
+.message.assistant {
+	align-self: flex-start;
+	background: #f5f8fd;
+	border: 1px solid #dce5f2;
+}
+
+.sources {
+	margin-top: 0.5rem;
+	border-top: 1px solid #d9dee8;
+	padding-top: 0.4rem;
+}
+
+.sources-title {
+	margin: 0 0 0.25rem;
+	font-size: 0.8rem;
+	font-weight: 600;
+}
+
+.source-item {
+	margin: 0;
+	font-size: 0.78rem;
+}
+
+.composer {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.9rem;
+	transition: gap var(--motion-base) ease;
+}
+
+.composer-field {
+	flex: 1;
+}
+
+button[mat-flat-button] {
+	min-height: 46px;
+	border-radius: 12px;
+}
+
+button mat-spinner {
+	margin: 0 auto;
+}
+
+.error-message {
+	margin: 0 0 0.85rem;
+	color: #a11434;
+	background: #fdeef2;
+	border: 1px solid #f8ccd8;
+	border-radius: 10px;
+	padding: 0.6rem 0.75rem;
+	animation: riseFadeIn 200ms ease both;
+}
+
+@media (max-width: 760px) {
+	.composer {
+		flex-direction: column;
+	}
+
+	button[mat-flat-button] {
+		width: 100%;
+	}
+
+	.message {
+		max-width: 92%;
+	}
+}
+
+@media (max-width: 480px) {
+	.page-content {
+		padding: 0.7rem;
+	}
+
+	.messages {
+		max-height: 58vh;
+		padding-right: 0.15rem;
+	}
+
+	.message {
+		max-width: 95%;
+		padding: 0.7rem 0.82rem;
+		font-size: 0.95rem;
+	}
+
+	button[mat-flat-button] {
+		min-height: 48px;
+	}
+
+	:host ::ng-deep .mat-mdc-card-actions {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.55rem;
+	}
+
+	:host ::ng-deep .mat-mdc-card-actions .mat-mdc-button {
+		width: 100%;
+		justify-content: center;
+	}
+}

@@ -1,1 +1,73 @@
-<p>login works!</p>
+<section class="auth-page">
+	<mat-card class="auth-card">
+		<mat-card-header>
+			<mat-card-title>Đăng nhập</mat-card-title>
+			<mat-card-subtitle>Tiếp tục hành trình định hướng nghề nghiệp của bạn</mat-card-subtitle>
+		</mat-card-header>
+
+		<mat-card-content>
+			@if (successMessage) {
+				<p class="success-message">{{ successMessage }}</p>
+			}
+
+			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form" novalidate>
+				<mat-form-field appearance="outline">
+					<mat-label>Email</mat-label>
+					<input matInput type="email" formControlName="username" />
+					@if (loginForm.controls.username.invalid && loginForm.controls.username.touched) {
+						<mat-error>Vui lòng nhập email.</mat-error>
+					}
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Mật khẩu</mat-label>
+					<input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" />
+					<button
+						mat-icon-button
+						matSuffix
+						type="button"
+						(click)="hidePassword = !hidePassword"
+						[attr.aria-label]="hidePassword ? 'Hiện mật khẩu' : 'Ẩn mật khẩu'"
+					>
+						@if (hidePassword) {
+							<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<path
+									d="M12 5C6.73 5 2.18 8.11 0 12c2.18 3.89 6.73 7 12 7s9.82-3.11 12-7c-2.18-3.89-6.73-7-12-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"
+									fill="currentColor"
+								/>
+								<circle cx="12" cy="12" r="2" fill="currentColor" />
+							</svg>
+						} @else {
+							<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<path
+									d="M2 4.27 3.28 3 21 20.72 19.73 22l-2.43-2.43A12.53 12.53 0 0 1 12 19c-5.27 0-9.82-3.11-12-7a13.81 13.81 0 0 1 4.73-5.1L2 4.27zm8.31 8.31 3.42 3.42A3.94 3.94 0 0 1 12 16a4 4 0 0 1-4-4c0-.63.15-1.22.42-1.73l1.89 1.89zm9.13 1.29-3.06-3.06A3.98 3.98 0 0 0 12 8a3.9 3.9 0 0 0-1.17.18L8.35 5.7A13.2 13.2 0 0 1 12 5c5.27 0 9.82 3.11 12 7-.73 1.3-1.65 2.45-2.56 3.47z"
+									fill="currentColor"
+								/>
+							</svg>
+						}
+					</button>
+					@if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
+						<mat-error>Vui lòng nhập mật khẩu.</mat-error>
+					}
+				</mat-form-field>
+
+				@if (errorMessage) {
+					<p class="error-message">{{ errorMessage }}</p>
+				}
+
+				<button mat-flat-button color="primary" type="submit" [disabled]="isSubmitting">
+					@if (isSubmitting) {
+						<mat-spinner diameter="18"></mat-spinner>
+					}
+					@if (!isSubmitting) {
+						<span>Đăng nhập</span>
+					}
+				</button>
+			</form>
+		</mat-card-content>
+
+		<mat-card-actions>
+			<a mat-button routerLink="/register">Tạo tài khoản mới</a>
+		</mat-card-actions>
+	</mat-card>
+</section>

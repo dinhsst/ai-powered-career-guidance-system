@@ -10,17 +10,31 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   get<T>(path: string): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl}${path}`, this.getHeaders());
+    return this.http.get<T>(`${this.baseUrl}${path}`, { headers: this.buildHeaders() });
   }
 
   post<T>(path: string, body: unknown): Observable<T> {
-    return this.http.post<T>(`${this.baseUrl}${path}`, body, this.getHeaders());
+    if (body instanceof URLSearchParams) {
+      return this.http.post<T>(
+        `${this.baseUrl}${path}`,
+        body.toString(),
+        {
+          headers: this.buildHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded'
+          })
+        }
+      );
+    }
+
+    return this.http.post<T>(`${this.baseUrl}${path}`, body, { headers: this.buildHeaders() });
   }
 
-  private getHeaders() {
+  private buildHeaders(extraHeaders?: Record<string, string>): HttpHeaders {
+    let headers = new HttpHeaders(extraHeaders ?? {});
     const token = localStorage.getItem('access_token');
-    return token
-      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
-      : {};
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
   }
 }

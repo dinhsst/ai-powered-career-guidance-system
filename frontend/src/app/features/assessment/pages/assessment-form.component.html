@@ -1,1 +1,138 @@
-<p>assessment-form works!</p>
+<mat-toolbar color="primary">
+	<span>Hệ thống tư vấn hướng nghiệp AI</span>
+	<span class="spacer"></span>
+	<button mat-stroked-button type="button" (click)="logout()">Đăng xuất</button>
+</mat-toolbar>
+
+<section class="page-content">
+	<mat-card>
+		<mat-card-header>
+			<mat-card-title>Bài đánh giá</mat-card-title>
+			<mat-card-subtitle>Khám phá nhóm nghề phù hợp từ hồ sơ của bạn</mat-card-subtitle>
+		</mat-card-header>
+		<mat-card-content>
+			<form [formGroup]="form" class="assessment-form" (ngSubmit)="submitAssessment()" novalidate>
+				<div formGroupName="subject_scores" class="grid-3">
+					<mat-form-field appearance="outline">
+						<mat-label>Toán (0-10)</mat-label>
+						<input matInput type="number" step="0.1" formControlName="toan" />
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Ngữ văn (0-10)</mat-label>
+						<input matInput type="number" step="0.1" formControlName="ngu_van" />
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Tiếng Anh (0-10)</mat-label>
+						<input matInput type="number" step="0.1" formControlName="tieng_anh" />
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Vật lý (0-10)</mat-label>
+						<input matInput type="number" step="0.1" formControlName="vat_ly" />
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Hóa học (0-10)</mat-label>
+						<input matInput type="number" step="0.1" formControlName="hoa_hoc" />
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Sinh học (0-10)</mat-label>
+						<input matInput type="number" step="0.1" formControlName="sinh_hoc" />
+					</mat-form-field>
+				</div>
+
+				<div formGroupName="holland_scores" class="grid-3">
+					<mat-form-field appearance="outline">
+						<mat-label>Realistic - R (0-1)</mat-label>
+						<input matInput type="number" step="0.01" formControlName="realistic" />
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Investigative - I (0-1)</mat-label>
+						<input matInput type="number" step="0.01" formControlName="investigative" />
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Artistic - A (0-1)</mat-label>
+						<input matInput type="number" step="0.01" formControlName="artistic" />
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Social - S (0-1)</mat-label>
+						<input matInput type="number" step="0.01" formControlName="social" />
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Enterprising - E (0-1)</mat-label>
+						<input matInput type="number" step="0.01" formControlName="enterprising" />
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Conventional - C (0-1)</mat-label>
+						<input matInput type="number" step="0.01" formControlName="conventional" />
+					</mat-form-field>
+				</div>
+
+				<div class="grid-2">
+					<mat-form-field appearance="outline">
+						<mat-label>Điều kiện tài chính</mat-label>
+						<mat-select formControlName="financial_level">
+							<mat-option [value]="1">Khó khăn</mat-option>
+							<mat-option [value]="2">Trung bình</mat-option>
+							<mat-option [value]="3">Khá giả</mat-option>
+						</mat-select>
+					</mat-form-field>
+
+					<mat-form-field appearance="outline">
+						<mat-label>Bậc học mục tiêu</mat-label>
+						<mat-select formControlName="target_education_level">
+							@for (item of educationLevels; track item.value) {
+								<mat-option [value]="item.value">{{ item.label }}</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+				</div>
+
+				@if (errorMessage) {
+					<p class="error-message">{{ errorMessage }}</p>
+				}
+
+				<button mat-flat-button color="primary" type="submit" [disabled]="isSubmitting">
+					@if (isSubmitting) {
+						<mat-spinner diameter="18"></mat-spinner>
+					}
+					@if (!isSubmitting) {
+						<span>Gửi bài đánh giá</span>
+					}
+				</button>
+			</form>
+
+			@if (result) {
+				<section class="result-block">
+					<h3>Kết quả đề xuất</h3>
+					<p>Mã Holland nổi trội: <strong>{{ result.holland_code }}</strong></p>
+					<p>Chế độ xử lý: <strong>{{ result.mode }}</strong></p>
+
+					<div class="recommendations">
+						@for (rec of result.recommendations; track rec.career_code) {
+							<mat-card class="recommendation-card">
+								<mat-card-title>{{ rec.career_name }}</mat-card-title>
+								<mat-card-subtitle>{{ rec.career_code }} • Độ phù hợp: {{ rec.confidence | percent:'1.0-0' }}</mat-card-subtitle>
+								<mat-card-content>
+									<p>{{ rec.explanation }}</p>
+								</mat-card-content>
+							</mat-card>
+						}
+					</div>
+				</section>
+			}
+		</mat-card-content>
+		<mat-card-actions>
+			<a mat-button routerLink="/chat">Mở trò chuyện</a>
+			<a mat-button routerLink="/results">Xem kết quả</a>
+		</mat-card-actions>
+	</mat-card>
+</section>

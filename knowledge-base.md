@@ -27,8 +27,8 @@
         + Áp dụng XAI (Explainable AI) cho mô hình ML: Nếu hệ thống dùng mô hình phân loại (Random Forest, SVM...), hãy sử dụng SHAP (SHapley Additive exPlanations) hoặc LIME để vẽ biểu đồ trực quan hóa: Trực giác (30%), Điểm số (40%), Khả năng tài chính (30%) đã đóng góp thế nào vào kết quả ngành nghề được gợi ý.
         + Ngôn ngữ bình dân (Accessible Language): Chuyển đổi các thuật ngữ học thuật phức tạp sang ngôn ngữ dễ hiểu đối với học sinh cấp 2, cấp 3 và phụ huynh ở nông thôn (ví dụ: Thay vì nói "Ngành này phù hợp với chỉ số trí tuệ logic-toán học cao", hãy nói "Bạn có thế mạnh ở các môn tính toán và tư duy tìm nguyên nhân").💡 
 6. Tech Stack:
-    - Frontend: Angular
+    - Frontend: Angular + angular material
     - Backend: Python (FastAPI) để dễ dàng tích hợp các thư viện AI.
-    - AI Core: * Trắc nghiệm & Khớp điểm số (ML): Scikit-learn (Mô hình Classification/Recommendation).
+    - AI Core: Trắc nghiệm & Khớp điểm số (ML): Scikit-learn (Mô hình Classification/Recommendation).
     - Tư vấn sâu & Trò chuyện (LLM API): Gemini 1.5 Flash (để tiết kiệm chi phí API), kết hợp thư viện LangChain để làm RAG kết nối database giáo dục.
     - Bảo mật: Dùng Guardrails AI để chặn prompt injection.

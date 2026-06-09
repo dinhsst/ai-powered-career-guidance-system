@@ -1,1 +1,60 @@
-<p>chat-page works!</p>
+<mat-toolbar color="primary">
+	<span>Hệ thống tư vấn hướng nghiệp AI</span>
+	<span class="spacer"></span>
+	<button mat-stroked-button type="button" (click)="logout()">Đăng xuất</button>
+</mat-toolbar>
+
+<section class="page-content">
+	<mat-card class="chat-card">
+		<mat-card-header>
+			<mat-card-title>Trò chuyện hướng nghiệp</mat-card-title>
+			<mat-card-subtitle>Đặt câu hỏi và nhận tư vấn nghề nghiệp từ AI</mat-card-subtitle>
+		</mat-card-header>
+		<mat-card-content>
+			<div class="messages" #messagesContainer>
+				@for (item of messages; track $index) {
+					<div class="message" [class.user]="item.role === 'user'" [class.assistant]="item.role === 'assistant'">
+						{{ item.content }}
+						@if (item.role === 'assistant' && item.sources?.length) {
+							<div class="sources">
+								<p class="sources-title">Nguồn tham khảo</p>
+								@for (source of item.sources; track $index) {
+									<p class="source-item">- {{ source }}</p>
+								}
+							</div>
+						}
+					</div>
+				}
+			</div>
+
+			@if (errorMessage) {
+				<p class="error-message">{{ errorMessage }}</p>
+			}
+
+			<div class="composer">
+				<mat-form-field appearance="outline" class="composer-field">
+					<mat-label>Nhập câu hỏi của bạn</mat-label>
+					<textarea
+						matInput
+						rows="3"
+						[formControl]="messageControl"
+						(keydown)="onComposerKeydown($event)"
+					></textarea>
+				</mat-form-field>
+
+				<button mat-flat-button color="primary" type="button" [disabled]="isSending" (click)="sendMessage()">
+					@if (isSending) {
+						<mat-spinner diameter="18"></mat-spinner>
+					}
+					@if (!isSending) {
+						<span>Gửi</span>
+					}
+				</button>
+			</div>
+		</mat-card-content>
+		<mat-card-actions>
+			<a mat-button routerLink="/assessment">Quay lại đánh giá</a>
+			<a mat-button routerLink="/results">Xem kết quả</a>
+		</mat-card-actions>
+	</mat-card>
+</section>

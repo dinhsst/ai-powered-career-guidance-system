@@ -1,0 +1,149 @@
+.spacer {
+	flex: 1;
+}
+
+.page-content {
+	padding: 1.1rem;
+	max-width: 980px;
+	margin: 0 auto;
+	animation: riseFadeIn 320ms ease both;
+}
+
+:host ::ng-deep mat-toolbar {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
+
+.result-block {
+	display: grid;
+	gap: 0.85rem;
+}
+
+.result-block p {
+	margin: 0;
+}
+
+.recommendations {
+	display: grid;
+	gap: 0.85rem;
+	margin-top: 0.6rem;
+}
+
+.recommendation-card mat-card-title {
+	font-size: 1.05rem;
+}
+
+.recommendation-card {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(245, 251, 255, 0.88));
+	opacity: 0;
+	animation: riseFadeIn 340ms ease forwards;
+}
+
+.recommendation-card:nth-child(1) { animation-delay: 70ms; }
+.recommendation-card:nth-child(2) { animation-delay: 130ms; }
+.recommendation-card:nth-child(3) { animation-delay: 190ms; }
+
+.xai-section {
+	margin-top: 0.9rem;
+	padding: 0.95rem;
+	border: 1px solid #d6dfec;
+	border-radius: 12px;
+	background: linear-gradient(180deg, rgba(252, 254, 255, 0.92), rgba(242, 248, 255, 0.92));
+}
+
+.xai-section h3 {
+	margin: 0;
+	font-size: 1rem;
+}
+
+.xai-caption {
+	margin-top: 0.35rem;
+	margin-bottom: 0.75rem;
+	color: #546279;
+	font-size: 0.92rem;
+}
+
+.xai-chart {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.xai-row {
+	display: grid;
+	grid-template-columns: 170px 1fr 54px;
+	align-items: center;
+	gap: 0.6rem;
+	opacity: 0;
+	animation: riseFadeIn 300ms ease forwards;
+}
+
+.xai-row:nth-child(1) { animation-delay: 40ms; }
+.xai-row:nth-child(2) { animation-delay: 80ms; }
+.xai-row:nth-child(3) { animation-delay: 120ms; }
+.xai-row:nth-child(4) { animation-delay: 160ms; }
+.xai-row:nth-child(5) { animation-delay: 200ms; }
+.xai-row:nth-child(6) { animation-delay: 240ms; }
+
+.xai-label,
+.xai-value {
+	font-size: 0.9rem;
+}
+
+.xai-bar-track {
+	height: 11px;
+	border-radius: 999px;
+	overflow: hidden;
+	background: #e3eaf4;
+}
+
+.xai-bar {
+	height: 100%;
+	border-radius: 999px;
+}
+
+.xai-bar.positive {
+	background: linear-gradient(90deg, #2e7d32, #66bb6a);
+}
+
+.xai-bar.negative {
+	background: linear-gradient(90deg, #b71c1c, #ef5350);
+}
+
+@media (max-width: 700px) {
+	.xai-row {
+		grid-template-columns: 1fr;
+		gap: 0.35rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.page-content {
+		padding: 0.7rem;
+	}
+
+	.result-block {
+		gap: 0.7rem;
+	}
+
+	.xai-section {
+		padding: 0.78rem;
+	}
+
+	.xai-label,
+	.xai-value {
+		font-size: 0.86rem;
+	}
+
+	:host ::ng-deep .mat-mdc-card-actions {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.55rem;
+	}
+
+	:host ::ng-deep .mat-mdc-card-actions .mat-mdc-button {
+		width: 100%;
+		justify-content: center;
+		min-height: 46px;
+	}
+}

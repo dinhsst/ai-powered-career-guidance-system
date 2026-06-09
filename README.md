@@ -34,7 +34,7 @@ Hệ thống tư vấn hướng nghiệp thông minh sử dụng AI — Đồ á
 cd backend
 cp .env.example .env   # Điền GOOGLE_API_KEY
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+.venv/Scripts/uvicorn.exe app.main:app --reload
 # API docs: http://localhost:8000/docs
 ```
 

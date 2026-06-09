@@ -3,7 +3,7 @@ from typing import Optional, List
 
 router = APIRouter()
 
-# Placeholder data — replace with database/JSON file loading
+# Dữ liệu mẫu, sẽ thay bằng dữ liệu từ cơ sở dữ liệu hoặc tệp JSON
 SAMPLE_CAREERS = [
     {"code": "CNTT", "name": "Công nghệ thông tin", "holland_codes": ["I", "R"], "avg_salary": "15-30 triệu/tháng", "demand": "Rất cao"},
     {"code": "Y_khoa", "name": "Y khoa", "holland_codes": ["I", "S"], "avg_salary": "20-50 triệu/tháng", "demand": "Cao"},

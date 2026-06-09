@@ -1,0 +1,3 @@
+- Thông tư số 26/2020/TT-BLĐTBXH: Ban hành Danh mục ngành, nghề đào tạo cấp IV trình độ trung cấp, trình độ cao đẳng. Đây là danh mục phân loại cực kỳ chi tiết tất cả các nghề từ kỹ thuật, dịch vụ đến kinh tế. -> https://vanban.chinhphu.vn/?pageid=27160&docid=202868
+- Thông tư số 05/2023/TT-BLĐTBXH: Danh mục ngành, nghề học nặng nhọc, độc hại, nguy hiểm. -> https://vanban.chinhphu.vn/?pageid=27160&docid=208131&classid=1&orggroupid=4
+- Thông tư số 09/2022/TT-BGDĐT (Danh mục thống kê ngành đào tạo của giáo dục đại học) -> https://vanban.chinhphu.vn/?pageid=27160&docid=205986

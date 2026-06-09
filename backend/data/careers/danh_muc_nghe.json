@@ -1,0 +1,81 @@
+[
+  {
+    "ma_nganh_trung_cap": "5480202",
+    "ma_nganh_cao_dang": "6480202",
+    "ten_tieng_viet": "Công nghệ thông tin (Ứng dụng phần mềm)",
+    "ten_tieng_anh": "Information Technology (software application)",
+    "thong_tin_phap_ly": {
+      "danh_muc_cap_iv": "Thông tư số 26/2020/TT-BLĐTBXH",
+      "ngay_ban_hanh_danh_muc": "30/12/2020",
+      "hieu_luc_danh_muc": "14/02/2021"
+    },
+    "nhan_kiem_duyet_y_te": {
+      "hoc_tap_nang_nhoc_doc_hai_nguy_hiem": "Không",
+      "can_cu_phap_ly": "Thông tư số 05/2023/TT-BLĐTBXH (Không xuất hiện trong danh mục độc hại)"
+    }
+  },
+  {
+    "ma_nganh_trung_cap": "5510202",
+    "ma_nganh_cao_dang": "6510202",
+    "ten_tieng_viet": "Công nghệ kỹ thuật ô tô",
+    "ten_tieng_anh": "Automobile, tractor engineering",
+    "thong_tin_phap_ly": {
+      "danh_muc_cap_iv": "Thông tư số 26/2020/TT-BLĐTBXH",
+      "ngay_ban_hanh_danh_muc": "30/12/2020",
+      "hieu_luc_danh_muc": "14/02/2021"
+    },
+    "nhan_kiem_duyet_y_te": {
+      "hoc_tap_nang_nhoc_doc_hai_nguy_hiem": "Có",
+      "can_cu_phap_ly": "Thông tư số 05/2023/TT-BLĐTBXH (Nằm tại danh mục nhóm ngành Công nghệ kỹ thuật cơ khí)",
+      "ngay_ap_dung_che_do": "30/07/2023"
+    }
+  },
+  {
+    "ma_nganh_trung_cap": "5520123",
+    "ma_nganh_cao_dang": "6520123",
+    "ten_tieng_viet": "Hàn",
+    "ten_tieng_anh": "Welding",
+    "thong_tin_phap_ly": {
+      "danh_muc_cap_iv": "Thông tư số 26/2020/TT-BLĐTBXH",
+      "ngay_ban_hanh_danh_muc": "30/12/2020",
+      "hieu_luc_danh_muc": "14/02/2021"
+    },
+    "nhan_kiem_duyet_y_te": {
+      "hoc_tap_nang_nhoc_doc_hai_nguy_hiem": "Có",
+      "can_cu_phap_ly": "Thông tư số 05/2023/TT-BLĐTBXH (Nằm tại danh mục nhóm ngành Kỹ thuật cơ khí và cơ kỹ thuật)",
+      "ngay_ap_dung_che_do": "30/07/2023"
+    }
+  },
+  {
+    "ma_nganh_trung_cap": "5720301",
+    "ma_nganh_cao_dang": "6720301",
+    "ten_tieng_viet": "Điều dưỡng",
+    "ten_tieng_anh": "Nursing",
+    "thong_tin_phap_ly": {
+      "danh_muc_cap_iv": "Thông tư số 26/2020/TT-BLĐTBXH",
+      "ngay_ban_hanh_danh_muc": "30/12/2020",
+      "hieu_luc_danh_muc": "14/02/2021"
+    },
+    "nhan_kiem_duyet_y_te": {
+      "hoc_tap_nang_nhoc_doc_hai_nguy_hiem": "Có",
+      "can_cu_phap_ly": "Thông tư số 05/2023/TT-BLĐTBXH (Nằm tại danh mục nhóm ngành Điều dưỡng - Hộ sinh)",
+      "ngay_ap_dung_che_do": "30/07/2023"
+    }
+  },
+  {
+    "ma_nganh_trung_cap": "5810207",
+    "ma_nganh_cao_dang": "6810207",
+    "ten_tieng_viet": "Kỹ thuật chế biến món ăn",
+    "ten_tieng_anh": "Cooking technique",
+    "thong_tin_phap_ly": {
+      "danh_muc_cap_iv": "Thông tư số 26/2020/TT-BLĐTBXH",
+      "ngay_ban_hanh_danh_muc": "30/12/2020",
+      "hieu_luc_danh_muc": "14/02/2021"
+    },
+    "nhan_kiem_duyet_y_te": {
+      "hoc_tap_nang_nhoc_doc_hai_nguy_hiem": "Có",
+      "can_cu_phap_ly": "Thông tư số 05/2023/TT-BLĐTBXH (Nằm tại danh mục nhóm ngành Khách sạn, nhà hàng)",
+      "ngay_ap_dung_che_do": "30/07/2023"
+    }
+  }
+]

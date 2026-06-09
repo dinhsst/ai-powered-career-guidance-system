@@ -1,1 +1,181 @@
-/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700&display=swap');
+
+:root {
+	--bg-start: #eef4ff;
+	--bg-end: #f8fbff;
+	--surface: rgba(255, 255, 255, 0.82);
+	--surface-border: rgba(111, 129, 160, 0.22);
+	--text-main: #1d2430;
+	--text-muted: #5a667b;
+	--accent: #1f6fff;
+	--accent-soft: #d6e6ff;
+	--field-hover: #2d6eea;
+	--field-focus: #1f6fff;
+	--radius-lg: 16px;
+	--shadow-lg: 0 18px 50px -28px rgba(20, 34, 66, 0.42);
+	--motion-fast: 160ms;
+	--motion-base: 260ms;
+	--motion-slow: 420ms;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color: var(--text-main);
+	background:
+		radial-gradient(circle at 10% -5%, #d7e6ff 0, transparent 35%),
+		radial-gradient(circle at 92% 12%, #e8f0ff 0, transparent 40%),
+		linear-gradient(150deg, var(--bg-start), var(--bg-end));
+	background-attachment: fixed;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: 'Outfit', 'Manrope', sans-serif;
+	letter-spacing: 0.01em;
+}
+
+.mat-mdc-card {
+	background: var(--surface) !important;
+	border: 1px solid var(--surface-border);
+	border-radius: var(--radius-lg) !important;
+	box-shadow: var(--shadow-lg) !important;
+	backdrop-filter: blur(12px);
+	transition: transform var(--motion-base) ease, box-shadow var(--motion-base) ease, border-color var(--motion-base) ease;
+}
+
+.mat-mdc-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 20px 46px -25px rgba(20, 34, 66, 0.48) !important;
+	border-color: rgba(78, 107, 154, 0.35);
+}
+
+.mat-toolbar.mat-primary {
+	background: linear-gradient(95deg, #1052c9, #1f6fff 58%, #3b84ff) !important;
+	color: #f7fbff;
+	box-shadow: 0 10px 28px -16px rgba(16, 58, 142, 0.6);
+}
+
+.mat-mdc-button-base {
+	letter-spacing: 0.01em;
+	transition: transform var(--motion-fast) ease, filter var(--motion-fast) ease;
+}
+
+.mat-mdc-button-base:hover {
+	transform: translateY(-1px);
+	filter: saturate(1.08);
+}
+
+.mat-mdc-form-field {
+	transition: none;
+}
+
+.mat-mdc-form-field .mdc-text-field {
+	transition: background-color var(--motion-fast) ease, box-shadow var(--motion-fast) ease;
+}
+
+.mat-mdc-form-field .mdc-notched-outline__leading,
+.mat-mdc-form-field .mdc-notched-outline__notch,
+.mat-mdc-form-field .mdc-notched-outline__trailing {
+	transition: border-color var(--motion-fast) ease, border-width var(--motion-fast) ease;
+}
+
+.mat-mdc-form-field:hover .mdc-text-field {
+	background-color: rgba(247, 251, 255, 0.9);
+	box-shadow: 0 7px 18px -14px rgba(26, 58, 124, 0.45);
+}
+
+.mat-mdc-form-field:hover .mdc-notched-outline__leading,
+.mat-mdc-form-field:hover .mdc-notched-outline__notch,
+.mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+	border-color: var(--field-hover) !important;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+	border-color: var(--field-focus) !important;
+	border-width: 2px !important;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-text-field {
+	box-shadow: 0 10px 24px -16px rgba(31, 111, 255, 0.55);
+}
+
+@media (pointer: coarse) {
+	.mat-mdc-button-base,
+	.mat-mdc-icon-button,
+	.mat-mdc-stroked-button,
+	.mat-mdc-unelevated-button {
+		min-height: 46px;
+	}
+
+	.mat-mdc-form-field .mdc-text-field {
+		min-height: 52px;
+	}
+}
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: #9fb5da #e8eef9;
+}
+
+*::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+	background: #9fb5da;
+	border-radius: 999px;
+	border: 2px solid #e8eef9;
+}
+
+*::-webkit-scrollbar-track {
+	background: #e8eef9;
+}
+
+@keyframes riseFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 1ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 1ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+@media (max-width: 480px) {
+	body {
+		font-size: 15px;
+	}
+
+	.mat-toolbar.mat-primary {
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
+	}
+
+	.mat-mdc-card {
+		border-radius: 14px !important;
+	}
+}

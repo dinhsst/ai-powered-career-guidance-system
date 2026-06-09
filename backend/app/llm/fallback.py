@@ -15,7 +15,7 @@ HOLLAND_TO_CAREERS = {
 }
 
 
-def rule_based_response(question: str, context: Optional[Dict] = None) -> Dict:
+def rule_based_response(question: str, context: Optional[Dict] = None, reason: Optional[str] = None) -> Dict:
     """
     Basic career guidance when AI services are unavailable.
     Returns structured response based on pre-defined rules.
@@ -30,9 +30,13 @@ def rule_based_response(question: str, context: Optional[Dict] = None) -> Dict:
     if not base_careers:
         base_careers = ["Công nghệ thông tin", "Kinh doanh", "Sư phạm", "Y tế", "Kỹ thuật"]
 
+    if reason == "rate_limited":
+        prefix = "Hệ thống AI đang quá tải tạm thời (giới hạn lượt gọi API). "
+    else:
+        prefix = "Hệ thống AI đang tạm thời bận. "
+
     answer = (
-        "Hệ thống AI đang tạm thời bận. Dựa trên thông tin bạn cung cấp, "
-        f"một số ngành nghề có thể phù hợp: {', '.join(base_careers[:3])}. "
+        prefix +
         "Vui lòng thử lại sau để nhận tư vấn chi tiết hơn từ AI."
     )
 

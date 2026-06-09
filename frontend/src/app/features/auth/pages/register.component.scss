@@ -1,0 +1,88 @@
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.auth-card {
+  width: min(520px, 100%);
+  overflow: hidden;
+  animation: riseFadeIn 360ms ease both;
+}
+
+.auth-form {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 0.95rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button[mat-flat-button] {
+  min-height: 46px;
+  border-radius: 12px;
+}
+
+button mat-spinner {
+  margin: 0 auto;
+}
+
+.error-message {
+  color: #a11434;
+  background: #fdeef2;
+  border: 1px solid #f7cad7;
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  margin: 0;
+}
+
+:host ::ng-deep .auth-card .mat-mdc-card-header {
+  padding-top: 0.35rem;
+}
+
+:host ::ng-deep .auth-card .mat-mdc-card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+:host ::ng-deep .auth-card .mat-mdc-card-subtitle {
+  color: #5f6e84;
+}
+
+:host ::ng-deep .auth-card .mat-mdc-form-field {
+  opacity: 0;
+  animation: riseFadeIn 320ms ease forwards;
+}
+
+:host ::ng-deep .auth-card .mat-mdc-form-field:nth-of-type(1) { animation-delay: 60ms; }
+:host ::ng-deep .auth-card .mat-mdc-form-field:nth-of-type(2) { animation-delay: 110ms; }
+:host ::ng-deep .auth-card .mat-mdc-form-field:nth-of-type(3) { animation-delay: 160ms; }
+:host ::ng-deep .auth-card .mat-mdc-form-field:nth-of-type(4) { animation-delay: 210ms; }
+
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 0.85rem;
+    align-content: start;
+    padding-top: 1.15rem;
+  }
+
+  .auth-card {
+    width: 100%;
+  }
+
+  .auth-form {
+    gap: 0.72rem;
+  }
+
+  button[mat-flat-button] {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  :host ::ng-deep .auth-card .mat-mdc-card-title {
+    font-size: 1.2rem;
+  }
+}

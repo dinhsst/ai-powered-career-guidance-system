@@ -17,8 +17,8 @@ CAREER_NAMES = {
 @router.post("/submit", response_model=AssessmentResponse)
 async def submit_assessment(request: AssessmentRequest):
     """
-    Submit Holland test + academic scores to get AI career recommendations.
-    Includes SHAP-based explainability for each recommendation.
+    Nhận kết quả trắc nghiệm Holland và điểm học tập để tạo gợi ý nghề nghiệp bằng AI.
+    Mỗi gợi ý có kèm diễn giải dựa trên SHAP.
     """
     features = {
         "realistic": request.holland_scores.realistic,
@@ -38,7 +38,7 @@ async def submit_assessment(request: AssessmentRequest):
 
     raw_results = career_classifier.predict(features)
 
-    # Determine dominant Holland code
+    # Xác định mã Holland trội
     holland_dict = request.holland_scores.model_dump()
     top_holland = sorted(holland_dict.items(), key=lambda x: x[1], reverse=True)[:2]
     holland_code = "".join([k[0].upper() for k, _ in top_holland])
@@ -49,6 +49,7 @@ async def submit_assessment(request: AssessmentRequest):
             career_name=CAREER_NAMES.get(r["career_code"], r["career_code"]),
             confidence=r["confidence"],
             explanation=r["explanation"],
+            shap_factors=r.get("shap_factors"),
         )
         for r in raw_results
     ]

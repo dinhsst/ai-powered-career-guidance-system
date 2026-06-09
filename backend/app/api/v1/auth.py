@@ -1,13 +1,14 @@
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel, EmailStr
+from sqlalchemy.orm import Session
+
+from app.core.database import get_db
 from app.core.security import create_access_token, get_password_hash, verify_password, verify_token
+from app.models.user import User
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
-
-# In-memory store for demo — replace with database in production
-fake_users_db: dict = {}
 
 
 class RegisterRequest(BaseModel):
@@ -22,31 +23,37 @@ class TokenResponse(BaseModel):
 
 
 @router.post("/register", status_code=201)
-async def register(request: RegisterRequest):
-    if request.email in fake_users_db:
+async def register(request: RegisterRequest, db: Session = Depends(get_db)):
+    existing_user = db.query(User).filter(User.email == request.email).first()
+    if existing_user:
         raise HTTPException(status_code=400, detail="Email đã được đăng ký")
-    fake_users_db[request.email] = {
-        "email": request.email,
-        "full_name": request.full_name,
-        "hashed_password": get_password_hash(request.password),
-    }
+
+    user = User(
+        email=request.email,
+        full_name=request.full_name,
+        hashed_password=get_password_hash(request.password),
+    )
+    db.add(user)
+    db.commit()
+
     return {"message": "Đăng ký thành công"}
 
 
 @router.post("/login", response_model=TokenResponse)
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = fake_users_db.get(form_data.username)
-    if not user or not verify_password(form_data.password, user["hashed_password"]):
+async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == form_data.username).first()
+    if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Email hoặc mật khẩu không đúng")
-    token = create_access_token({"sub": user["email"]})
+
+    token = create_access_token({"sub": user.email})
     return TokenResponse(access_token=token)
 
 
 @router.get("/me")
-async def get_me(token: str = Depends(oauth2_scheme)):
+async def get_me(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     payload = verify_token(token)
     email = payload.get("sub")
-    user = fake_users_db.get(email)
+    user = db.query(User).filter(User.email == email).first()
     if not user:
         raise HTTPException(status_code=404, detail="Người dùng không tồn tại")
-    return {"email": user["email"], "full_name": user["full_name"]}
+    return {"email": user.email, "full_name": user.full_name}
