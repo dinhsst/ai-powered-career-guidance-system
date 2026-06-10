@@ -113,7 +113,10 @@ class RAGPipeline:
         try:
             
             result = await self._invoke_with_retry(question)
+            context_text = "\n\n".join([doc.page_content for doc in result])
             answer = result.get("result", "").strip()
+            create_stuff_documents_chain = self.retrieval_chain.combine_documents_chain
+            combine_docs_chain = create_stuff_documents_chain(llm=self.llm, prompt=CAREER_ADVISOR_SYSTEM_PROMPT)
             
             # If RAG returns empty answer, switch to LLM-only fallback
             if not answer:
@@ -126,12 +129,13 @@ class RAGPipeline:
             
             # Enhance answer with source citations
             answer_with_citations = self._add_source_citations(answer, source_documents)
-            
-            return {
-                "answer": answer_with_citations,
-                "sources": sources,
-                "mode": "rag",
-            }
+            response = combine_docs_chain.invoke({"context": context_text, "input": question})
+            return response;
+            # return {
+            #     "answer": answer_with_citations,
+            #     "sources": sources,
+            #     "mode": "rag",
+            # }
         except Exception as e:
             if self._is_rate_limited_error(e):
                 logger.warning("RAG rate-limited (429). Using LLM-only fallback for this request.")

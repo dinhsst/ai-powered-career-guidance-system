@@ -24,9 +24,9 @@ async def send_message(request: ChatRequest):
         context_prefix = _build_context_prefix(request.user_context)
         question = f"{context_prefix}\n\nCâu hỏi: {request.message}"
     # Add system prompt before the question
-    full_prompt = f"{CAREER_ADVISOR_SYSTEM_PROMPT}\n\n{question}"    
+    #full_prompt = f"{CAREER_ADVISOR_SYSTEM_PROMPT}\n\n{question}"    
     logging.info(f"Nhận câu hỏi: {question} (session: {session_id})")
-    result = await rag_pipeline.query(full_prompt, request.user_context)
+    result = await rag_pipeline.query(question, request.user_context)
 
     return ChatResponse(
         reply=result["answer"],
