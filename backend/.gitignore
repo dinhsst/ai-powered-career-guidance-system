@@ -22,3 +22,4 @@ var/
 *.log
 # ChromaDB vector store data
 data/vectorstore/
+.env
