@@ -3,12 +3,11 @@ RAG Pipeline using LangChain + ChromaDB + Gemini.
 Retrieves grounded information from education database before LLM generation.
 """
 import os
-os.environ["ANONYMIZED_TELEMETRY"] = "False"
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.chains import RetrievalQA
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import JSONLoader, DirectoryLoader
+from langchain_community.document_loaders import JSONLoader, DirectoryLoader, PyPDFDirectoryLoader
 from langchain.schema import Document, HumanMessage, SystemMessage
 from pathlib import Path
 from typing import Optional
@@ -21,6 +20,7 @@ from app.llm.prompts import CAREER_ADVISOR_SYSTEM_PROMPT
 logger = logging.getLogger(__name__)
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
+CAREERS_DIR = DATA_DIR / "careers"
 
 
 class RAGPipeline:
@@ -52,18 +52,18 @@ class RAGPipeline:
                 )
             else:
                 logger.info("No existing vectorstore found. Loading documents and creating new vectorstore.")
-                docs = self._load_documents()
+                chunks = self._load_documents()
                 self.vectorstore = Chroma.from_documents(
-                    documents=docs,
+                    documents=chunks,
                     embedding=embeddings,
                     persist_directory=persist_dir,
                     collection_name="system_career_guidance",
                 )
-                logger.info("Vectorstore created and persisted with %d documents.", len(docs))
+                logger.info("Vectorstore created and persisted with %d documents.", len(chunks))
 
             retriever = self.vectorstore.as_retriever(
                 search_type="similarity",
-                search_kwargs={"k": 5},
+                search_kwargs={"k": 4},
             )
 
             self.retrieval_chain = RetrievalQA.from_chain_type(
@@ -88,21 +88,27 @@ class RAGPipeline:
             logger.warning(f"RAG Pipeline initialization failed: {e}. Falling back to LLM-only mode.")
 
     def _load_documents(self) -> list[Document]:
-        """Load career and university data from JSON files."""
-        docs = []
-        for json_file in DATA_DIR.rglob("*.json"):
-            try:
-                loader = JSONLoader(
-                    file_path=str(json_file),
-                    jq_schema=".[]",
-                    text_content=False,
-                )
-                docs.extend(loader.load())
-            except Exception as e:
-                logger.warning(f"Failed to load {json_file}: {e}")
+        """Load career and university data."""
+        loader = PyPDFDirectoryLoader(CAREERS_DIR, glob="*.pdf")
+        documents = loader.load()
+        if not documents:
+            print("Không tìm thấy file PDF nào hoặc các file đều trống.")
+            return None
+        
+        # docs = []
+        # for json_file in DATA_DIR.rglob("*.json"):
+        #     try:
+        #         loader = JSONLoader(
+        #             file_path=str(json_file),
+        #             jq_schema=".[]",
+        #             text_content=False,
+        #         )
+        #         docs.extend(loader.load())
+        #     except Exception as e:
+        #         logger.warning(f"Failed to load {json_file}: {e}")
 
-        splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-        return splitter.split_documents(docs)
+        splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=150)
+        return splitter.split_documents(documents)
 
     async def query(self, question: str, context: dict = None) -> dict:
         """Query the RAG pipeline with a career guidance question."""
@@ -113,22 +119,33 @@ class RAGPipeline:
         try:
             
             result = await self._invoke_with_retry(question)
-            context_text = "\n\n".join([doc.page_content for doc in result])
-            answer = result.get("result", "").strip()
+            #context_text = "\n\n".join([doc.page_content for doc in result])
+            #answer = result.get("result", "").strip()
+            context_parts = []
+            for doc in result:
+                # Lấy tên file và số trang từ metadata (Langchain đếm trang từ 0 nên cần +1)
+                source = doc.metadata.get("source", "Tài liệu không xác định")
+                page = doc.metadata.get("page", -1) 
+                page_num = int(page) + 1 if page != -1 else "Không rõ"
+                
+                # Đóng gói nội dung kèm theo nhãn nguồn
+                chunk_text = f"[Nguồn: {source} | Trang: {page_num}]\n{doc.page_content}"
+                context_parts.append(chunk_text)
+            context_text = "\n\n".join(context_parts)
             create_stuff_documents_chain = self.retrieval_chain.combine_documents_chain
             combine_docs_chain = create_stuff_documents_chain(llm=self.llm, prompt=CAREER_ADVISOR_SYSTEM_PROMPT)
             
             # If RAG returns empty answer, switch to LLM-only fallback
-            if not answer:
-                logger.warning("RAG returned empty answer. Switching to LLM-only fallback.")
-                return await self._llm_only_fallback(question, context)
+            # if not answer:
+            #     logger.warning("RAG returned empty answer. Switching to LLM-only fallback.")
+            #     return await self._llm_only_fallback(question, context)
             
             # Extract and format sources from retrieved documents
-            source_documents = result.get("source_documents", [])
-            sources = self._format_sources(source_documents)
+            # source_documents = result.get("source_documents", [])
+            # sources = self._format_sources(source_documents)
             
             # Enhance answer with source citations
-            answer_with_citations = self._add_source_citations(answer, source_documents)
+            # answer_with_citations = self._add_source_citations(answer, source_documents)
             response = combine_docs_chain.invoke({"context": context_text, "input": question})
             return response;
             # return {

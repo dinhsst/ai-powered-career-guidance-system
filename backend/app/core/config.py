@@ -28,6 +28,8 @@ class Settings(BaseSettings):
 
     CHROMA_PERSIST_DIRECTORY: str = Field(default="./data/vectorstore", validation_alias="CHROMA_PERSIST_DIRECTORY")
 
+    ANONYMIZED_TELEMETRY: bool = Field(default=False, validation_alias="ANONYMIZED_TELEMETRY")
+
     GUARDRAILS_API_KEY: str = Field(default="", validation_alias="GUARDRAILS_API_KEY")
 
     CORS_ORIGINS: List[str] = Field(
