@@ -11,7 +11,7 @@
             "type": "debugpy",
             "request": "launch",
             "module": "uvicorn",
-            "cwd": "${workspaceFolder}/backend",
+            "cwd": "${workspaceFolder}/source/backend",
             "args": [
                 "app.main:app",
                 //"--reload",
